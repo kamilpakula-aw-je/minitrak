@@ -1,0 +1,22 @@
+Twoim zadaniem jest wygenerowanie podstrony "Kariera". Ma to być odrębna zakładka.
+Podstrona musi być nowoczesna, responsywna (RWD) i spójna z identyfikacją wizualną projektu.
+Struktura strony:
+Sekcja Hero: Nagłówek zachęcający do pracy oraz tło ze zdjęciem. Jako zdjęcia użyj ogólnego placeholdera (np. ze źródła Unsplash) o tematyce "agriculture machinery" lub "tractor mechanic".
+Sekcja "Kogo szukamy" (Ogłoszenia): Estetyczne karty lub sekcje opisujące 3 stanowiska: Handlowiec, Mechanik, Pracownik serwisu. Użyj tekstów podanych na końcu tego promptu.
+Sekcja Aplikacji (Formularz kontaktowy): Czysty, przejrzysty formularz pozwalający na szybką aplikację. Musi zawierać:
+Imię i nazwisko (input text)
+Adres e-mail (input email)
+Numer telefonu (input tel)
+Wybór stanowiska, na które aplikuje kandydat (Select/Dropdown z opcjami: Handlowiec, Mechanik, Pracownik Serwisu)
+Pole do załączenia pliku CV (input type="file" z akceptacją .pdf, .doc, .docx)
+Przycisk "Wyślij aplikację / Aplikuj"
+Kod ma być czysty i gotowy do łatwej implementacji backendu dla formularza w przyszłości (dodaj atrybuty name i id do pól formularza).
+Teksty do wykorzystania na stronie: 
+Nagłówek sekcji Hero: Zbuduj swoją karierę na solidnym fundamencie. Dołącz do zespołu STEKRO.
+Wstęp: Jesteśmy liderem w sprzedaży i serwisie maszyn rolniczych oraz komunalnych. Szukamy ludzi z pasją, dla których ryk silnika ciągnika i nowoczesne technologie w rolnictwie to chleb powszedni.
+Handlowiec: Znasz rynek agrotechniczny od podszewki? Szukamy Handlowca, który potrafi rozmawiać z rolnikami i firmami komunalnymi ich własnym językiem. Oczekujemy znajomości budowy i specyfiki maszyn oraz umiejętności budowania długotrwałych relacji.
+Mechanik: Szukamy fachowych rąk do naszego warsztatu. Jeśli diagnozowanie usterek w nowoczesnych ciągnikach i maszynach komunalnych nie ma dla Ciebie tajemnic, a klucz płaski to Twoje podstawowe narzędzie pracy – czekamy właśnie na Ciebie.
+Pracownik serwisu: Nasz serwis działa stacjonarnie i mobilnie, dbając o ciągłość pracy maszyn w sezonie. Oczekujemy wszechstronnej znajomości techniki rolniczej i komunalnej oraz gotowości do szybkiego reagowania na awarie u klientów.
+Zachęta do formularza: Nie zwlekaj, dołącz do grona profesjonalistów. Wybierz stanowisko, zostaw swoje dane, załącz CV i daj się poznać!
+
+

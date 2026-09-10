@@ -1,0 +1,232 @@
+Name
+Stabilne ID formularzy + tracking GTM
+Description
+Użyj tego skilla zawsze, gdy w projekcie znajdują się formularze, np. kontaktowe, ofertowe, newsletterowe, rezerwacyjne lub formularze zapytania o produkt/maszynę.
+
+Celem jest zapewnienie, że każdy formularz posiada stałe i unikalne HTML id, którego Google Tag Manager może używać do identyfikacji formularza. Skill ma również chronić te identyfikatory przed przypadkową zmianą podczas refactorów oraz poprawnie śledzić udane wysłanie formularzy.
+Instructions
+W każdym projekcie traktuj HTML `id` formularza jako element integracji z Google Tag Managerem.
+
+NIE zmieniaj istniejącego `id` formularza bez wyraźnego polecenia użytkownika.
+
+## 1. Audyt wszystkich formularzy
+
+Najpierw znajdź wszystkie elementy `<form>` w projekcie, niezależnie od tego, czy znajdują się w:
+
+- HTML,
+- Astro,
+- JSX,
+- TSX,
+- React,
+- komponentach formularzy,
+- modalach,
+- popupach,
+- formularzach generowanych dynamicznie.
+
+Dla każdego formularza sprawdź:
+
+- czy posiada atrybut `id`,
+- czy `id` jest stałe,
+- czy jest unikalne,
+- czy nie jest generowane dynamicznie,
+- czy inne formularze nie używają tego samego `id`.
+
+## 2. Każdy formularz musi mieć stałe ID
+
+Każdy formularz musi posiadać jawnie wpisane, stabilne HTML `id`.
+
+Przykład:
+
+<form id="kontakt-form">
+
+lub:
+
+<form id="zapytaj-o-maszyne-form">
+
+ID nie może być generowane przy renderowaniu strony.
+
+NIE używaj do `id`:
+
+- Math.random(),
+- Date.now(),
+- crypto.randomUUID(),
+- indeksów tablic,
+- dynamicznych UUID,
+- losowych hashy,
+- identyfikatorów zmieniających się pomiędzy renderami.
+
+Nie rób np.:
+
+<form id={`form-${crypto.randomUUID()}`}>
+
+ponieważ uniemożliwia to stabilne śledzenie formularza w GTM.
+
+## 3. Nazewnictwo
+
+Stosuj czytelny format:
+
+[nazwa-formularza]-form
+
+Przykłady:
+
+kontakt-form
+zapytaj-o-oferte-form
+wynajem-maszyny-form
+newsletter-form
+rezerwacja-form
+serwis-form
+zapytaj-o-maszyne-form
+
+Nie używaj ogólnych nazw takich jak:
+
+form
+form1
+form2
+contact
+main-form
+
+jeżeli na stronie lub w projekcie może występować więcej formularzy.
+
+## 4. ID musi być unikalne
+
+Na jednej stronie nie mogą istnieć dwa elementy `<form>` posiadające takie samo `id`.
+
+Jeżeli ten sam komponent formularza występuje kilka razy na jednej stronie, nie kopiuj tego samego ID.
+
+Nadaj wariantowi formularza osobny, przewidywalny identyfikator.
+
+Przykład:
+
+kontakt-header-form
+kontakt-footer-form
+
+Nie generuj ID losowo.
+
+## 5. Nie zmieniaj istniejących ID
+
+Jeżeli formularz posiada już poprawne ID wykorzystywane przez GTM, zachowaj je.
+
+Refactor komponentu, zmiana layoutu, designu, frameworka, endpointu API lub logiki wysyłania formularza NIE jest powodem do zmiany jego HTML `id`.
+
+Przed zakończeniem zadania porównaj ID formularzy przed i po zmianach.
+
+## 6. Tracking udanego wysłania
+
+Jeżeli formularz jest wysyłany przez JavaScript, fetch, AJAX lub API, nie traktuj samego kliknięcia przycisku Submit jako udanego wysłania.
+
+Event analityczny powinien być wysyłany dopiero po otrzymaniu potwierdzenia sukcesu z backendu.
+
+Po prawidłowym wysłaniu:
+
+window.dataLayer = window.dataLayer || [];
+
+window.dataLayer.push({
+  event: 'form_submit_success',
+  formId: 'kontakt-form'
+});
+
+`formId` musi odpowiadać rzeczywistemu HTML `id` formularza.
+
+Przykład:
+
+<form id="kontakt-form">
+
+powinien wysłać:
+
+{
+  event: 'form_submit_success',
+  formId: 'kontakt-form'
+}
+
+## 7. Nie wysyłaj danych osobowych do GTM
+
+Do `dataLayer` NIE przekazuj:
+
+- imienia,
+- nazwiska,
+- adresu e-mail,
+- telefonu,
+- treści wiadomości,
+- adresu,
+- innych danych osobowych użytkownika.
+
+Do identyfikacji formularza wystarczy np.:
+
+event
+formId
+formType
+pagePath
+
+## 8. Sukces oznacza rzeczywisty sukces
+
+Nie wysyłaj:
+
+form_submit_success
+
+jeżeli:
+
+- walidacja formularza się nie powiodła,
+- request zakończył się błędem,
+- backend zwrócił status błędu,
+- zapis danych nie został wykonany.
+
+Event powinien wystąpić dokładnie raz dla jednego poprawnego wysłania.
+
+Uważaj, aby React re-render, callback lub ponowna obsługa Promise nie powodowały podwójnego eventu.
+
+## 9. Nie myl HTML ID z ID rekordu w bazie
+
+HTML:
+
+<form id="kontakt-form">
+
+jest identyfikatorem używanym m.in. przez frontend i Google Tag Manager.
+
+Nie ma związku z:
+
+id rekordu w PostgreSQL,
+SERIAL PRIMARY KEY,
+UUID rekordu,
+identyfikatorem zgłoszenia w bazie.
+
+Nie zmieniaj HTML `id` formularza w celu rozwiązania problemu dotyczącego identyfikatorów rekordów w bazie.
+
+## 10. Nowe formularze
+
+Za każdym razem, kiedy tworzysz nowy formularz:
+
+1. nadaj mu stałe i unikalne `id`,
+2. upewnij się, że nie istnieje już formularz z takim ID,
+3. użyj tego samego ID w evencie `form_submit_success`,
+4. nie zmieniaj ID w późniejszych refactorach.
+
+## 11. Audyt końcowy
+
+Po każdej zmianie związanej z formularzami sprawdź:
+
+- wszystkie formularze posiadają ID,
+- każde ID jest unikalne,
+- żadne ID nie jest generowane losowo,
+- żadne istniejące ID nie zostało przypadkowo zmienione,
+- event `form_submit_success` wykorzystuje właściwe `formId`,
+- event pojawia się tylko po rzeczywistym sukcesie,
+- jeden submit generuje maksymalnie jeden event,
+- do dataLayer nie trafiają dane osobowe.
+
+Na końcu pokaż tabelę:
+
+formularz | plik | HTML id | tracking success | status
+
+Przykład:
+
+Kontakt | ContactForm.tsx | kontakt-form | form_submit_success | OK
+Newsletter | Newsletter.astro | newsletter-form | form_submit_success | OK
+
+Jeżeli którykolwiek formularz nie posiada stabilnego ID lub poprawnego trackingu, popraw go.
+
+## Najważniejsza zasada
+
+Nigdy nie usuwaj ani nie zmieniaj istniejącego HTML `id` formularza używanego przez GTM bez wyraźnego polecenia użytkownika.
+
+Stabilność identyfikatorów formularzy jest częścią publicznego API analitycznego projektu.
+

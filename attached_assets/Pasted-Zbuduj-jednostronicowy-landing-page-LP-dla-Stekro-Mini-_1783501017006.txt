@@ -1,0 +1,29 @@
+Zbuduj jednostronicowy landing page (LP) dla Stekro Mini Trak — dealera ciągników kompaktowych. Strona po polsku, responsywna (desktop + mobile), nowoczesna i konwersyjna. Jedyny cel strony: wysłanie formularza wyceny maszyny zostawianej w rozliczeniu (#formularz).
+
+Temat i przekaz:
+Akcja „Zostaw starą maszynę w rozliczeniu i odbierz nowy ciągnik kompaktowy". Klient nie musi sam sprzedawać starej maszyny — rozliczamy ją przy zakupie nowej, jej wartość zaliczamy jako wkład własny. Wycena jest bezpłatna i niezobowiązująca: wystarczy formularz i kilka zdjęć. Przyjmujemy w rozliczeniu używane ciągniki i maszyny różnych marek.
+
+Kolejność sekcji (jedna strona, menu w nagłówku z kotwicami):
+
+Hero — nagłówek H1: „Zostaw starą maszynę w rozliczeniu i odbierz nowy ciągnik kompaktowy", krótki akapit o zasadzie rozliczenia, pogrubione „Bezpłatna i niezobowiązująca wycena.", dwa przyciski: główny „Wyślij maszynę do wyceny" (kotwica do #formularz) i drugi „Zadzwoń: +48 509 877 716" (link tel:).
+Jak to działa — 4 proste kroki: (1) wyślij formularz ze zdjęciami i danymi maszyny, (2) przygotujemy bezpłatną wycenę i skontaktujemy się telefonicznie lub mailowo, (3) potwierdzamy wartość przy oględzinach na miejscu u klienta, (4) odbierasz nowy ciągnik, a starą maszynę zostawiasz nam w rozliczeniu.
+Formularz wyceny (#formularz) — pola: imię i nazwisko*, telefon*, e-mail, marka maszyny, model, rok produkcji, wiadomość, załączanie zdjęć (multiple, image/), checkbox zgody RODO, przycisk „Wyślij do wyceny". Po wysłaniu komunikat sukcesu; przy błędzie komunikat z telefonem +48 509 877 716.
+Nasze ciągniki kompaktowe — 4 karty produktów ze zdjęciem, opisem i tabelką specyfikacji:
+Solis S26 — ekonomiczny, bez kabiny, idealny do sadów, mniejszych gospodarstw i prac komunalnych. Moc: 26 KM · Silnik: 3-cyl. 1,3 l · Napęd: 4WD, Stage V · Udźwig TUZ: 600 kg · Kabina: ROPS
+Solis S50 — z komfortową kabiną, więcej mocy i udźwigu do cięższych prac. Moc: 50 KM · Silnik: 3-cyl. 3,1 l CRDi · Napęd: 4WD, Stage V · Udźwig TUZ: 2500 kg · Kabina: z kabiną
+Aupax 2025 — mały, zwrotny, do pracy tam, gdzie duża maszyna się nie zmieści. Moc: 25 KM · Silnik: 1,5 l · Skrzynia: 4WD, 8+8 · Udźwig TUZ: 720 kg · WOM: 540/1000
+Aupax 2040 — mocniejszy, większy udźwig do wymagających zadań w ciasnych miejscach. Moc: 40 KM · Silnik: Doosan 1,8 l · Skrzynia: 4WD, 8+8 · Udźwig TUZ: 850 kg · WOM: 540/1000
+Pod kartami przycisk CTA „Zostaw maszynę w rozliczeniu — wyślij do wyceny" (kotwica do #formularz).
+Cytat / zaufanie — wyróżniony blok w stylu wypowiedzi: „Twoja obecna maszyna to realny wkład własny. Wyceniamy ją uczciwie na podstawie zdjęć i stanu, a potem potwierdzamy przy oględzinach. Dzięki temu przesiadka na nowy ciągnik po prostu się opłaca."
+FAQ — 4–6 pytań, m.in.: „Czy wycena jest płatna?" (nie, bezpłatna i niezobowiązująca), „Jakie maszyny przyjmujecie w rozliczeniu?" (używane ciągniki i maszyny różnych marek — stan i wartość ustalamy przy wycenie), „Co się dzieje po wysłaniu zgłoszenia?" (kontakt telefoniczny/mailowy, wycena, umówienie oględzin), „Czy muszę dopłacać całość od razu?" (wartość starej maszyny obniża kwotę zakupu; możliwe finansowanie — szczegóły ustalamy indywidualnie).
+Końcowe CTA — pasek z nagłówkiem „Gotowy na nowy ciągnik kompaktowy?" i przyciskiem do #formularz.
+Nagłówek strony (header): logo Stekro Mini Trak, telefony +48 18 521 10 79 i +48 509 877 716 (linki tel:), e-mail biuro@stekro.pl (mailto:), przycisk „Zapytaj o wycenę" (#formularz). Menu: Jak to działa · Wycena online · Ciągniki · FAQ.
+
+Stopka: dane kontaktowe (telefony, e-mail), godziny pracy: pn–pt 8–16, sobota 8–13, copyright.
+
+SEO: jeden H1; title ≤65 znaków zakończony „ | Stekro Mini Trak"; meta description ≤145 znaków; pierwszy akapit hero zaczyna się od pogrubionej, bezpośredniej odpowiedzi na intencję („zostaw maszynę w rozliczeniu"); dane strukturalne JSON-LD: FAQPage (zgodne 1:1 z widocznym FAQ) i LocalBusiness.
+
+Zgodność: baner cookies (akceptuj wszystkie / odrzuć opcjonalne / ustawienia), checkbox zgody RODO przy formularzu z informacją o administratorze danych.
+
+Ważne: na tej stronie nie może pojawić się żadna wzmianka o innych markach ciągników ani o innych akcjach promocyjnych — wyłącznie ciągniki kompaktowe Solis i Aupax oraz marka Stekro Mini Trak.
+

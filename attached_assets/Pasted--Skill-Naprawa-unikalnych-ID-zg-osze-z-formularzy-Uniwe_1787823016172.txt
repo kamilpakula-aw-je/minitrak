@@ -1,0 +1,71 @@
+# Skill: Naprawa unikalnych ID zgłoszeń z formularzy
+
+Uniwersalny prompt do wklejenia w Replit Agent / AI Assistant na dowolnej stronie z formularzem (kontaktowym, zamówieniowym, newsletter itp.), która zapisuje dane do bazy. Wykrywa i naprawia problem, w którym każde nowe zgłoszenie nadpisuje poprzednie zamiast dostawać własny, unikalny identyfikator.
+
+---
+
+## Jak używać
+
+1. Otwórz projekt danej strony w Replit.
+2. Uruchom Replit Agent / AI Assistant.
+3. Wklej cały blok „PROMPT” poniżej (bez tego nagłówka).
+4. Jeśli znasz technologię projektu (Node.js, Python, baza SQL, Replit DB itd.) — dopisz to na końcu, agent zaoszczędzi czas na zgadywaniu.
+5. Po zmianach poproś o krótki test (patrz punkt 6 w prompt cie).
+
+---
+
+## ⚠️ Ważne rozróżnienie (przeczytaj przed użyciem)
+
+To dotyczy **wyłącznie ID rekordu w bazie danych**, nie ID elementu `<form>` w HTML.
+
+- **ID elementu `<form>` (atrybut `id="..."` w HTML/JSX)** — musi zostać **niezmienione i stałe** na każdej stronie. Google Tag Manager identyfikuje formularze właśnie po tym ID (triggery typu „Form ID equals...", „Element ID"), więc jeśli ten ID się zmienia lub jest generowany losowo, GTM przestaje rozpoznawać formularz i śledzenie się psuje.
+- **ID rekordu w bazie danych** — to osobny, wewnętrzny identyfikator (np. UUID, numer w tabeli), całkowicie niezależny od ID elementu HTML. To on ma być unikalny przy każdym zapisie — i to jego dotyczy poniższy prompt.
+
+**Jeśli chcesz śledzić udane wysłanie formularza w GTM**, nie rób tego przez zmianę ID — zamiast tego po stronie frontendu, przy udanym submicie, wypchnij zdarzenie do `dataLayer`, np.:
+
+```js
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+  event: 'form_submit_success',
+  formId: 'kontakt-form' // stały, niezmienny identyfikator formularza
+});
+```
+
+Następnie w GTM tworzysz trigger typu „Custom Event" nasłuchujący na `form_submit_success` i podpinasz pod niego tagi (GA4, Google Ads, itd.). To jest stabilne, niezależne od zmian ID w bazie i polecane podejście.
+
+---
+
+## PROMPT
+
+Przeanalizuj ten projekt pod kątem obsługi formularzy zapisujących dane do bazy (kontaktowe, zamówieniowe, zapisy na newsletter, rezerwacje itp.).
+
+**Zanim wprowadzisz zmiany: nie zmieniaj ani nie usuwaj atrybutu `id` elementu `<form>` w HTML/JSX — musi pozostać stały, bo jest używany przez Google Tag Manager do śledzenia. Poniższe zmiany dotyczą wyłącznie ID rekordu zapisywanego w bazie danych, to zupełnie inny identyfikator.**
+
+Dla każdego znalezionego formularza sprawdź:
+
+1. **Znajdź endpoint/funkcję obsługującą wysyłkę** — miejsce, gdzie dane z formularza trafiają do zapisu (baza danych, plik, storage typu key-value).
+2. **Sprawdź pochodzenie ID zapisywanego rekordu**:
+   - Czy ID jest generowane raz, poza funkcją obsługującą request (np. jako zmienna globalna, stały klucz, licznik zainicjowany przy starcie serwera)?
+   - Czy dwa kolejne wysłania tego samego formularza nadpiszą się nawzajem w bazie zamiast utworzyć dwa osobne rekordy?
+   - Czy front-end wysyła ten sam „form ID” do backendu za każdym razem (np. ID wygenerowane raz przy załadowaniu strony i nieodświeżane po submicie)?
+3. **Napraw problem** zgodnie z technologią projektu:
+   - Node.js / JavaScript: generuj `crypto.randomUUID()` (lub `uuid` z pakietu `uuid`) wewnątrz handlera requestu, nie poza nim.
+   - Python: `import uuid; id = str(uuid.uuid4())` wewnątrz funkcji obsługującej request.
+   - Replit DB (key-value): zapisuj pod kluczem zawierającym unikalny ID, np. `zgloszenie:${id}`, nigdy pod stałym kluczem typu `zgloszenie` czy `form`.
+   - Baza SQL (Postgres/SQLite/MySQL): kolumna `id` powinna być `SERIAL` / `AUTOINCREMENT` / `PRIMARY KEY AUTO_INCREMENT`, żeby baza sama nadawała nowy numer przy każdym `INSERT`.
+   - Jeśli front-end generuje ID i wysyła je razem z danymi (np. do idempotency/anti-spam) — upewnij się, że ID jest tworzone na nowo tuż przed każdym submitem, a nie raz przy załadowaniu komponentu/strony.
+4. **Zastosuj tę samą logikę do wszystkich formularzy w projekcie**, nie tylko do jednego — przeskanuj cały kod (foldery `routes`, `api`, `server`, `pages/api`, `app` itp.) w poszukiwaniu innych miejsc z tym samym wzorcem błędu.
+5. **Pokaż podsumowanie zmian**: które pliki i linie zostały zmienione, w którym formularzu wcześniej występował problem i dlaczego.
+6. **Zaproponuj test**: wyślij dany formularz dwukrotnie (lub kilka różnych formularzy) i sprawdź w bazie/danych, czy powstały osobne rekordy z różnymi ID, a nie nadpisany jeden wpis.
+7. **Sprawdź, czy atrybut `id` elementu `<form>` w HTML/JSX pozostał niezmieniony** po wprowadzonych poprawkach — jeśli jakikolwiek fragment kodu generował ten atrybut dynamicznie lub go nadpisywał, przywróć go do stałej, sensownej wartości (np. `id="kontakt-form"`), żeby nie zepsuć śledzenia w Google Tag Managerze.
+
+Jeśli w projekcie jest więcej niż jedna strona/serwis z formularzami (np. osobne mikroserwisy albo repo z wieloma podstronami), przeskanuj je wszystkie i zastosuj tę samą naprawę konsekwentnie, zachowując styl kodu już używany w projekcie.
+
+---
+
+## Notatka techniczna (kontekst)
+
+Dopisz tutaj, jeśli wiadomo:
+- Stack: (np. Node.js + Express / Next.js / Python Flask / Django)
+- Baza danych: (np. Replit DB / PostgreSQL / SQLite / MongoDB)
+- Lista projektów/stron, na których ma być zastosowana naprawa

@@ -1,0 +1,28 @@
+Jak używać
+Otwórz projekt danej strony w Replit.
+Uruchom Replit Agent / AI Assistant.
+Wklej cały blok „PROMPT” poniżej (bez tego nagłówka).
+Jeśli znasz technologię projektu (Node.js, Python, baza SQL, Replit DB itd.) — dopisz to na końcu, agent zaoszczędzi czas na zgadywaniu.
+Po zmianach poproś o krótki test (patrz punkt 6 w prompt cie).
+PROMPT
+
+Przeanalizuj ten projekt pod kątem obsługi formularzy zapisujących dane do bazy (kontaktowe, zamówieniowe, zapisy na newsletter, rezerwacje itp.).
+
+Dla każdego znalezionego formularza sprawdź:
+
+Znajdź endpoint/funkcję obsługującą wysyłkę — miejsce, gdzie dane z formularza trafiają do zapisu (baza danych, plik, storage typu key-value).
+Sprawdź pochodzenie ID zapisywanego rekordu:
+Czy ID jest generowane raz, poza funkcją obsługującą request (np. jako zmienna globalna, stały klucz, licznik zainicjowany przy starcie serwera)?
+Czy dwa kolejne wysłania tego samego formularza nadpiszą się nawzajem w bazie zamiast utworzyć dwa osobne rekordy?
+Czy front-end wysyła ten sam „form ID” do backendu za każdym razem (np. ID wygenerowane raz przy załadowaniu strony i nieodświeżane po submicie)?
+Napraw problem zgodnie z technologią projektu:
+Node.js / JavaScript: generuj crypto.randomUUID() (lub uuid z pakietu uuid) wewnątrz handlera requestu, nie poza nim.
+Python: import uuid; id = str(uuid.uuid4()) wewnątrz funkcji obsługującej request.
+Replit DB (key-value): zapisuj pod kluczem zawierającym unikalny ID, np. zgloszenie:${id}, nigdy pod stałym kluczem typu zgloszenie czy form.
+Baza SQL (Postgres/SQLite/MySQL): kolumna id powinna być SERIAL / AUTOINCREMENT / PRIMARY KEY AUTO_INCREMENT, żeby baza sama nadawała nowy numer przy każdym INSERT.
+Jeśli front-end generuje ID i wysyła je razem z danymi (np. do idempotency/anti-spam) — upewnij się, że ID jest tworzone na nowo tuż przed każdym submitem, a nie raz przy załadowaniu komponentu/strony.
+Zastosuj tę samą logikę do wszystkich formularzy w projekcie, nie tylko do jednego — przeskanuj cały kod (foldery routes, api, server, pages/api, app itp.) w poszukiwaniu innych miejsc z tym samym wzorcem błędu.
+Pokaż podsumowanie zmian: które pliki i linie zostały zmienione, w którym formularzu wcześniej występował problem i dlaczego.
+Zaproponuj test: wyślij dany formularz dwukrotnie (lub kilka różnych formularzy) i sprawdź w bazie/danych, czy powstały osobne rekordy z różnymi ID, a nie nadpisany jeden wpis.
+
+Jeśli w projekcie jest więcej niż jedna strona/serwis z formularzami (np. osobne mikroserwisy albo repo z wieloma podstronami), przeskanuj je wszystkie i zastosuj tę samą naprawę konsekwentnie, zachowując styl kodu już używany w projekcie.
