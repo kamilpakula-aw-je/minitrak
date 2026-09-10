@@ -1,0 +1,15 @@
+- [Stekro SSR setup](stekro-ssr.md) — site is Express SSR, not static; routes in src/routes.tsx, seo-head mirrors use-seo; builds need PORT+BASE_PATH env. SSR integration test: `pnpm --filter @workspace/stekro run test:ssr`.
+- [express.static vs SSR trailing-slash](stekro-static-redirect.md) — static middleware needs redirect:false or dir-named routes (e.g. /krone) 301-loop.
+- [Lead photo storage](lead-photos-storage.md) — trade-in photos persist in object storage; retry must attach all or stay "failed"; PRIVATE_OBJECT_DIR includes bucket.
+- [Leads admin preview](leads-admin-preview.md) — /api/leads preview + photo endpoint use Basic auth vs ADMIN_PASSWORD; reuse requireAdmin; relative photo URLs; `pnpm run push` in lib/db on missing-column errors.
+- [@workspace/db stale types](workspace-db-types.md) — phantom "no exported member" errors mean lib/db dist .d.ts is stale; run `tsc -b` in lib/db.
+- [Leads preview integration test](leads-preview-test.md) — `pnpm --filter @workspace/api-server run test:leads`; seeds marker leads in dev DB, spawned server must have GMAIL_* stripped so retry loop can't email.
+- [Lead e-mail failure semantics](lead-intake-test.md) — "not_configured" vs "failed" are distinct; tests simulate SMTP failure via SMTP_HOST override to a closed local port (test:intake).
+- [Lead retry loop test](lead-retry-test.md) — retryFailedLeads takes DI overrides; test:retry uses esbuild-bundled harness scoped to marker leads so real failed leads aren't touched.
+- [Browser harness TrustedHTML](browser-harness-trustedhtml.md) — `<anonymous>` SmoothPointer can trigger TrustedHTML errors; verify source stack before blaming app code.
+- [Hero LCP preload sync](stekro-hero-preload.md) — hero srcset in home.tsx must match imagesrcset preload in seo-head.ts 1:1; React 19 SSR also auto-emits a preload for fetchPriority="high" imgs (deduped).
+- [archiver v8 ESM exports](archiver-esm.md) — no default factory; use `new ZipArchive(...)` named export, default import fails typecheck.
+- [Lead submission idempotency](lead-idempotency.md) — claim a DB-unique request key before uploads or e-mail; retries reuse the key, intentional new submissions rotate it.
+- [Product DOCX source truth](product-docx-source.md) — when product copy conflicts, extract word/document.xml directly; converted document reads may be stale or mismatched.
+- [SSR select restoration](ssr-select-restoration.md) — browser-restored select values can differ from React state after hydration; preserve DOM values and sync native input/change events.
+- [Production hydration deadlocks](production-hydration-deadlocks.md) — never top-level-await a lazy route from the client entry; split chunks can import entry exports and deadlock all SSR interactions.

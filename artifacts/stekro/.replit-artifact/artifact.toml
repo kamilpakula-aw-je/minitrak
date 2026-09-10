@@ -1,0 +1,40 @@
+kind = "web"
+previewPath = "/"
+title = "STEKRO Landing Page"
+version = "1.0.0"
+id = "artifacts/stekro"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23785
+
+[services.development]
+run = "pnpm --filter @workspace/stekro run dev"
+
+[services.production]
+
+[services.production.build]
+args = [ "pnpm", "--filter", "@workspace/stekro", "run", "build" ]
+
+[services.production.build.env]
+NODE_ENV = "production"
+PORT = "23785"
+BASE_PATH = "/"
+
+[services.production.run]
+args = [ "node", "artifacts/stekro/server.mjs" ]
+
+[services.production.run.env]
+PORT = "23785"
+NODE_ENV = "production"
+BASE_PATH = "/"
+
+[services.env]
+PORT = "23785"
+BASE_PATH = "/"

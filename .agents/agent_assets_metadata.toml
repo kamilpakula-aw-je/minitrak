@@ -1,0 +1,37 @@
+uploads = []
+
+[[generated]]
+id = "41gycCx-_O-YGzRt_5Z88"
+uri = "file://artifacts/stekro/public/hero-tractor.png"
+type = "image"
+title = "Cinematic blue tractor hero"
+
+[[generated]]
+id = "0F7LjwGmNi80OuytJKGkT"
+uri = "file://artifacts/stekro/public/dealership.png"
+type = "image"
+title = "Modern dealership building"
+
+[[generated]]
+id = "QQBdj79jG0PHWui06eir3"
+uri = "file://artifacts/stekro/public/parts-macro.png"
+type = "image"
+title = "Engine parts macro"
+
+[[generated]]
+id = "rFozV-FYRUL8Bmm9EHnnW"
+uri = "file://artifacts/stekro/public/og-image.png"
+type = "image"
+title = "stekro og photoreal"
+
+[[generated]]
+id = "wwYx0JedNU9UD5qube1BG"
+uri = "file://artifacts/stekro/src/assets/wymiana-hero-bg.png"
+type = "image"
+title = "wymiana hero banner solis tractors"
+
+[[outputs]]
+id = "OuB_DGhcpimWy-Lmt6T_G"
+uri = "file://attached_assets/stock_images/kariera_hero.jpg"
+type = "image"
+title = "tractor mechanic working in agricultural machinery workshop, professional repair"
